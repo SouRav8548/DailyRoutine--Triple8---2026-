@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8:8:8 Daily Routine</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="theme-color" content="#14213d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#14213d;--mute:#5b6784;--line:#dbe2f0;
+--class:#2a44c9;--self:#6f8cf0;--tuition:#8a3ffc;--free:#1f9d6b;--sleep:#8791a8;--now:#ffb703;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1426;--card:#151e36;--ink:#eaf0ff;--mute:#9aa7c7;--line:#26314f;--class:#6b82ff;--self:#4a66c9;--tuition:#b384ff;--free:#3ccf94;--sleep:#6b7592;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1426;--card:#151e36;--ink:#eaf0ff;--mute:#9aa7c7;--line:#26314f;--class:#6b82ff;--self:#4a66c9;--tuition:#b384ff;--free:#3ccf94;--sleep:#6b7592;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}
+html,body{width:100%;min-height:100%}
+main{width:100%;max-width:none;margin:0;padding:56px clamp(14px,3vw,48px) 48px}
+header{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+.ring{position:relative;width:190px;height:190px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:22}
+.ring .c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .c b{font-size:2.4rem;font-weight:800;letter-spacing:-.03em}
+.ring .c span{font-size:.78rem;color:var(--mute)}
+h1{margin:0 0 6px;font-size:clamp(2rem,6vw,3.2rem);line-height:1;font-weight:800;letter-spacing:-.035em}
+header p{margin:0;color:var(--mute);max-width:36ch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:.85rem}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}
+nav button{font:inherit;font-weight:600;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav button:focus-visible,.theme:focus-visible{outline:3px solid var(--now);outline-offset:2px}
+.sum{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 14px;color:var(--mute);font-size:.95rem}
+.sum b{color:var(--ink)}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:12px 14px}
+li.now{outline:3px solid var(--now);box-shadow:0 0 0 6px color-mix(in srgb,var(--now) 22%,transparent)}
+li.past{opacity:.55}
+.t{font-weight:600;font-size:.92rem;font-variant-numeric:tabular-nums;line-height:1.25}
+.t small{display:block;color:var(--mute);font-weight:400}
+.h{font-weight:600}
+.h small{display:block;color:var(--mute);font-weight:400;font-size:.85rem}
+.d{font-size:.82rem;color:var(--mute);text-align:right;white-space:nowrap}
+.tag{display:inline-block;background:var(--now);color:#14213d;font-size:.72rem;font-weight:800;padding:1px 8px;border-radius:999px;margin-left:8px;vertical-align:1px}
+.tips{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 14px}
+.tips h2{font-size:1.15rem;margin:14px 0 4px}
+.tips ul{margin:0;padding-left:18px;color:var(--mute)}
+.tips li{display:list-item;background:none;border:0;border-radius:0;padding:3px 0;outline:0;box-shadow:none}
+.theme{position:fixed;right:14px;top:calc(12px + env(safe-area-inset-top,0px));font:inherit;font-size:.8rem;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+@media (max-width:520px){li{grid-template-columns:78px 1fr;}.d{grid-column:2;text-align:left}.ring{width:150px;height:150px}.ring .c b{font-size:1.9rem}}
+@media (min-width:960px){
+main{display:grid;grid-template-columns:minmax(320px,400px) minmax(0,1fr);column-gap:clamp(24px,4vw,64px);align-items:start}
+header{grid-column:1;grid-row:1 / span 6;position:sticky;top:56px;flex-direction:column;align-items:flex-start;margin-bottom:0}
+.ring{width:240px;height:240px}.ring .c b{font-size:3rem}
+nav,.sum,ol,.tips,.notify{grid-column:2}
+nav{flex-wrap:wrap;overflow:visible}
+li{padding:14px 18px;grid-template-columns:110px 1fr auto}
+}
+@media (min-width:1500px){ol{grid-template-columns:1fr 1fr}li.now{z-index:1}}
+@media (min-width:600px) and (max-width:959px){.ring{width:170px;height:170px}li{grid-template-columns:110px 1fr auto}.d{grid-column:auto;text-align:right}}
+.notify{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--now);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.notify p{margin:0;font-size:.92rem;color:var(--mute);flex:1 1 240px}.notify p b{color:var(--ink)}
+.notify button{font:inherit;font-weight:600;background:var(--ink);color:var(--bg);border:0;padding:9px 16px;border-radius:999px;cursor:pointer}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
+<main>
+<header>
+  <div class="ring" aria-label="24 hours split into 8 hours study, 8 hours free, 8 hours sleep">
+    <svg viewBox="0 0 100 100" id="donut"></svg>
+    <div class="c"><b>8 : 8 : 8</b><span>study · free · sleep</span></div>
+  </div>
+  <div>
+    <h1>My daily routine</h1>
+    <p>Classes, tuition and self-study fit into 8 hours. Sleep gets 8. The last 8 are yours.</p>
+    <div class="legend">
+      <span><i style="background:var(--class)"></i>College class</span>
+      <span><i style="background:var(--self)"></i>Self-study</span>
+      <span><i style="background:var(--tuition)"></i>Tuition</span>
+      <span><i style="background:var(--free)"></i>Free time</span>
+      <span><i style="background:var(--sleep)"></i>Sleep</span>
+    </div>
+  </div>
+</header>
+
+<div class="notify"><p id="nstatus"><b>Task reminders are off.</b> Turn them on to get a notification every 30 seconds when a task starts, until you open this site.</p><button id="nbtn" type="button">Turn on reminders</button></div>
+<nav role="tablist" id="tabs" aria-label="Choose a day"></nav>
+<p class="sum" id="sum"></p>
+<ol id="list"></ol>
+
+<section class="tips">
+  <h2>Tips to make it work</h2>
+  <ul>
+    <li>Use the gaps between classes for self-study in the college library. That keeps evenings free.</li>
+    <li>Tuition is planned as 2 hours. If it runs to 2.5 hours, you lose only 30 minutes of free time, and the weekday self-study was already trimmed to make room for it.</li>
+    <li>Wednesday and Thursday are the heaviest days (labs plus tuition), so take the free morning slot to rest and sleep on time.</li>
+    <li>Put the phone away by 10:30 PM to fall asleep by 11:00.</li>
+    <li>Saturday evening is the main time for friends. Weekday evenings suit lighter hangouts or games.</li>
+    <li>Sunday stays a rest day apart from the two tuition sessions.</li>
+  </ul>
+</section>
+</main>
+
+<script>
+const F="free",C="class",S="self",T="tuition";
+let DAYS={};
+const SLEEP=[m(23),m(31),"sleep","Sleep","11:00 PM to 7:00 AM"];
+const names=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const col=t=>`var(--${t})`;
+const fmt=x=>{x=x%1440;let h=Math.floor(x/60),mm=x%60,ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+String(mm).padStart(2,"0")+" "+ap};
+const dur=(a,b)=>{const d=b-a,h=Math.floor(d/60),mm=d%60;return (h?h+" h":"")+(h&&mm?" ":"")+(mm?mm+" min":"")};
+
+function donut(work,free){
+  const R=39,Cc=2*Math.PI*R,parts=[[work,"var(--class)"],[free,"var(--free)"],[8,"var(--sleep)"]],tot=work+free+8;
+  let off=0,out=`<circle cx="50" cy="50" r="${R}" stroke="var(--line)"/>`;
+  parts.forEach(([v,c])=>{const len=v/tot*Cc;out+=`<circle cx="50" cy="50" r="${R}" stroke="${c}" stroke-width="22" stroke-dasharray="${len-.8} ${Cc}" stroke-dashoffset="${-off}" style="stroke-width:20"/>`;off+=len});
+  document.getElementById("donut").innerHTML=out;
+}
+
+let cur=(new Date().getDay()+6)%7; // Mon=0 ... Sun=6
+function render(){
+  const name=names[cur];if(!DAYS[name])return;const rows=[...DAYS[name],SLEEP];
+  const now=new Date(),isToday=((now.getDay()+6)%7)===cur,nm=now.getHours()*60+now.getMinutes();
+  let work=0;rows.forEach(r=>{if(r[2]==C||r[2]==S||r[2]==T)work+=r[1]-r[0]});
+  const wh=work/60,fh=16-wh;
+  donut(Math.round(wh*10)/10,Math.round(fh*10)/10);
+  document.getElementById("sum").innerHTML=`<span>Study and work <b>${dur(0,work)}</b></span><span>Free <b>${dur(0,Math.round(fh*60))}</b></span><span>Sleep <b>8 h</b></span>`;
+  document.getElementById("list").innerHTML=rows.map(r=>{
+    const [a,b,t,title,note]=r;
+    const nowIn=isToday&&((nm>=a&&nm<b)||(t=="sleep"&&(nm>=a||nm<b-1440)));
+    const past=isToday&&nm>=b&&t!="sleep";
+    return `<li class="${nowIn?"now":""} ${past?"past":""}" style="--c:${col(t)}"><div class="t">${fmt(a)}<small>to ${fmt(b)}</small></div><div class="h">${title}${nowIn?'<span class="tag">Now</span>':""}${note?`<small>${note}</small>`:""}</div><div class="d">${dur(a,b)}</div></li>`}).join("");
+  document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",i==cur));
+}
+const tabs=document.getElementById("tabs");
+names.forEach((n,i)=>{const b=document.createElement("button");b.type="button";b.role="tab";b.textContent=n.slice(0,3);b.setAttribute("aria-label",n);b.onclick=()=>{cur=i;render();history.replaceState&&0};tabs.appendChild(b)});
+fetch("routine.json").then(r=>r.json()).then(d=>{DAYS=d;render()}).catch(()=>{document.getElementById("list").innerHTML="<li><div></div><div class=\"h\">Could not load the routine.</div></li>"});setInterval(render,60000);
+document.getElementById("theme").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
+
+/* ---- reminders ---- */
+const nStatus=document.getElementById("nstatus"),nBtn=document.getElementById("nbtn");
+const b64=s=>{const r=(s+"=".repeat((4-s.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/");return Uint8Array.from(atob(r),c=>c.charCodeAt(0))};
+async function ack(){try{await fetch("/api/ack",{method:"POST"})}catch(e){}}
+async function setupNotify(ask){
+  if(!("serviceWorker" in navigator)||!("PushManager" in window)){nStatus.innerHTML="<b>Reminders need a supported browser.</b> On iPhone: tap Share, choose Add to Home Screen, then open the app from your home screen.";nBtn.hidden=true;return}
+  try{
+    const reg=await navigator.serviceWorker.register("/sw.js");
+    let sub=await reg.pushManager.getSubscription();
+    if(Notification.permission==="denied"){nStatus.innerHTML="<b>Notifications are blocked.</b> Allow them in your browser's site settings, then reload.";return}
+    if(!sub&&ask){
+      if(await Notification.requestPermission()!=="granted"){nStatus.innerHTML="<b>Permission not given.</b> Tap the button to try again.";return}
+      const {key}=await (await fetch("/api/config")).json();
+      sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(key)});
+    }
+    if(sub){
+      await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(sub)});
+      nStatus.innerHTML="<b>Reminders are on.</b> You will get a notification every 30 seconds when a task starts, until you open this site.";nBtn.hidden=true;
+    }
+  }catch(e){nStatus.innerHTML="<b>Could not turn on reminders.</b> "+e.message}
+}
+nBtn.onclick=()=>setupNotify(true);
+setupNotify(false);ack();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")ack()});
+</script>
+</body>
+</html>
