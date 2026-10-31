@@ -650,46 +650,6 @@
         }
       }
 
-      /* ---- added: 3D pie behind the 8:8:8 ring ---- */
-      .ring {
-        isolation: isolate;
-      }
-      .ring .sm-pie3d {
-        position: absolute;
-        z-index: -1;
-        left: 50%;
-        top: 60%;
-        width: 132%;
-        height: auto;
-        max-width: none;
-        transform: translate(-50%, -50%);
-        opacity: 0.6;
-        pointer-events: none;
-        animation: sm-bob 6s ease-in-out infinite;
-      }
-      .sm-wall {
-        filter: brightness(0.68);
-      }
-      @keyframes sm-bob {
-        0%,
-        100% {
-          transform: translate(-50%, -50%);
-        }
-        50% {
-          transform: translate(-50%, -53%);
-        }
-      }
-      @media (max-width: 520px) {
-        .ring .sm-pie3d {
-          width: 126%;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .ring .sm-pie3d {
-          animation: none;
-        }
-      }
-
       /* ---- added: course line under the name ---- */
       .sm-sub {
         display: inline-block;
@@ -732,80 +692,6 @@
           class="ring"
           aria-label="24 hours split into 8 hours study, 8 hours free, 8 hours sleep"
         >
-          <svg
-            class="sm-pie3d"
-            viewBox="0 0 200 150"
-            aria-hidden="true"
-            focusable="false"
-          >
-            <defs>
-              <mask
-                id="sm-hole"
-                maskUnits="userSpaceOnUse"
-                x="0"
-                y="0"
-                width="200"
-                height="150"
-              >
-                <rect width="200" height="150" fill="#fff" />
-                <ellipse cx="100" cy="60" rx="52" ry="52" fill="#000" />
-              </mask>
-            </defs>
-            <g mask="url(#sm-hole)">
-              <ellipse
-                cx="100"
-                cy="96"
-                rx="80"
-                ry="30"
-                fill="#000"
-                opacity=".22"
-              />
-              <path
-                class="sm-wall"
-                d="M186.0 60.0A86 42 0 0 1 174.48 81.0L174.48 107.0A86 42 0 0 0 186.0 86.0Z"
-                fill="var(--class)"
-              />
-              <path
-                class="sm-wall"
-                d="M174.48 81.0A86 42 0 0 1 25.52 81.0L25.52 107.0A86 42 0 0 0 174.48 107.0Z"
-                fill="var(--free)"
-              />
-              <path
-                class="sm-wall"
-                d="M25.52 81.0A86 42 0 0 1 14.0 60.0L14.0 86.0A86 42 0 0 0 25.52 107.0Z"
-                fill="var(--sleep)"
-              />
-              <path
-                d="M100 60L100.0 18.0A86 42 0 0 1 174.48 81.0Z"
-                fill="var(--class)"
-                stroke="var(--bg)"
-                stroke-width="1.2"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M100 60L174.48 81.0A86 42 0 0 1 25.52 81.0Z"
-                fill="var(--free)"
-                stroke="var(--bg)"
-                stroke-width="1.2"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M100 60L25.52 81.0A86 42 0 0 1 100.0 18.0Z"
-                fill="var(--sleep)"
-                stroke="var(--bg)"
-                stroke-width="1.2"
-                stroke-linejoin="round"
-              />
-              <ellipse
-                cx="84"
-                cy="46"
-                rx="47.300000000000004"
-                ry="13.44"
-                fill="#fff"
-                opacity=".14"
-              />
-            </g>
-          </svg>
           <svg viewBox="0 0 100 100" id="donut"></svg>
           <div class="c"><b>8 : 8 : 8</b><span>study · free · sleep</span></div>
         </div>
