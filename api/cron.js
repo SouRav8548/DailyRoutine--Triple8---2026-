@@ -38,6 +38,7 @@ module.exports = async (req, res) => {
   for (let round = 0; round < 2; round++) {
     const task = currentTask();
     if (!task) break;
+    if (process.env.ONCE === '1' && task.minutesIn > 0) break; // ONCE=1: one notification at task start only
     if (await redis.get(`ack:${task.key}`)) break;
     delivered += await sendAll({
       title: task.minutesIn < 1 ? 'Time to start' : 'Reminder',

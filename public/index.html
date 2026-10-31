@@ -68,6 +68,16 @@ li{padding:14px 18px;grid-template-columns:110px 1fr auto}
 .notify{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--now);border-radius:10px;padding:12px 14px;margin-bottom:14px}
 .notify p{margin:0;font-size:.92rem;color:var(--mute);flex:1 1 240px}.notify p b{color:var(--ink)}
 .notify button{font:inherit;font-weight:600;background:var(--ink);color:var(--bg);border:0;padding:9px 16px;border-radius:999px;cursor:pointer}
+ol.week{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;align-items:start}
+li.dayc{display:block;border-left:1px solid var(--line);padding:12px 12px 8px}
+li.dayc.today{outline:3px solid var(--now)}
+li.dayc h3{margin:0 0 6px;font-size:1.05rem;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+li.dayc h3 small{margin-left:auto;font-weight:400;color:var(--mute);font-size:.8rem}
+.r{border-left:5px solid var(--c);border-radius:6px;padding:6px 10px;margin-bottom:5px;background:color-mix(in srgb,var(--c) 9%,transparent)}
+.r.now{outline:2px solid var(--now);background:color-mix(in srgb,var(--now) 25%,transparent)}
+.rt{display:block;font-size:.76rem;color:var(--mute);font-variant-numeric:tabular-nums}
+.rh{display:block;font-weight:600;font-size:.92rem}
+.rh small{display:block;color:var(--mute);font-weight:400;font-size:.8rem}
 </style>
 </head>
 <body>
@@ -112,7 +122,7 @@ li{padding:14px 18px;grid-template-columns:110px 1fr auto}
 <script>
 const F="free",C="class",S="self",T="tuition";
 let DAYS={};
-const SLEEP=[m(23),m(31),"sleep","Sleep","11:00 PM to 7:00 AM"];
+const SLEEP=[1380,1860,"sleep","Sleep","11:00 PM to 7:00 AM"];
 const names=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 const col=t=>`var(--${t})`;
 const fmt=x=>{x=x%1440;let h=Math.floor(x/60),mm=x%60,ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+String(mm).padStart(2,"0")+" "+ap};
@@ -125,22 +135,41 @@ function donut(work,free){
   document.getElementById("donut").innerHTML=out;
 }
 
-let cur=(new Date().getDay()+6)%7; // Mon=0 ... Sun=6
+let cur=-1; // -1 = full week, 0 = Monday ... 6 = Sunday
+function markTabs(){document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",(i-1)==cur))}
+function weekHTML(nm,ti){
+  return names.map((n,i)=>{
+    const rows=[...DAYS[n],SLEEP];let w=0;rows.forEach(r=>{if(r[2]==C||r[2]==S||r[2]==T)w+=r[1]-r[0]});
+    const isT=i===ti;
+    return `<li class="dayc${isT?" today":""}"><h3>${n}${isT?'<span class="tag">Today</span>':""}<small>${dur(0,w)} study</small></h3>`+rows.map(r=>{
+      const [a,b,t,title,note]=r;
+      const nowIn=isT&&((nm>=a&&nm<b)||(t=="sleep"&&(nm>=a||nm<b-1440)));
+      return `<div class="r${nowIn?" now":""}" style="--c:${col(t)}"><span class="rt">${fmt(a)} to ${fmt(b)}</span><span class="rh">${title}${nowIn?'<span class="tag">Now</span>':""}${note?`<small>${note}</small>`:""}</span></div>`}).join("")+`</li>`}).join("");
+}
 function render(){
+  if(!DAYS.Monday)return;
+  if(cur===-1){
+    const d=new Date();
+    donut(8,8);
+    document.getElementById("sum").innerHTML='<span>Every day: <b>about 8 h</b> study, <b>about 8 h</b> free, <b>8 h</b> sleep</span><span>Tap a day for the detailed view</span>';
+    const L=document.getElementById("list");L.className="week";L.innerHTML=weekHTML(d.getHours()*60+d.getMinutes(),(d.getDay()+6)%7);
+    markTabs();return;
+  }
   const name=names[cur];if(!DAYS[name])return;const rows=[...DAYS[name],SLEEP];
   const now=new Date(),isToday=((now.getDay()+6)%7)===cur,nm=now.getHours()*60+now.getMinutes();
   let work=0;rows.forEach(r=>{if(r[2]==C||r[2]==S||r[2]==T)work+=r[1]-r[0]});
   const wh=work/60,fh=16-wh;
   donut(Math.round(wh*10)/10,Math.round(fh*10)/10);
   document.getElementById("sum").innerHTML=`<span>Study and work <b>${dur(0,work)}</b></span><span>Free <b>${dur(0,Math.round(fh*60))}</b></span><span>Sleep <b>8 h</b></span>`;
-  document.getElementById("list").innerHTML=rows.map(r=>{
+  document.getElementById("list").className="";document.getElementById("list").innerHTML=rows.map(r=>{
     const [a,b,t,title,note]=r;
     const nowIn=isToday&&((nm>=a&&nm<b)||(t=="sleep"&&(nm>=a||nm<b-1440)));
     const past=isToday&&nm>=b&&t!="sleep";
     return `<li class="${nowIn?"now":""} ${past?"past":""}" style="--c:${col(t)}"><div class="t">${fmt(a)}<small>to ${fmt(b)}</small></div><div class="h">${title}${nowIn?'<span class="tag">Now</span>':""}${note?`<small>${note}</small>`:""}</div><div class="d">${dur(a,b)}</div></li>`}).join("");
-  document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",i==cur));
+  markTabs();
 }
 const tabs=document.getElementById("tabs");
+{const w=document.createElement("button");w.type="button";w.role="tab";w.textContent="Full week";w.onclick=()=>{cur=-1;render()};tabs.appendChild(w)}
 names.forEach((n,i)=>{const b=document.createElement("button");b.type="button";b.role="tab";b.textContent=n.slice(0,3);b.setAttribute("aria-label",n);b.onclick=()=>{cur=i;render();history.replaceState&&0};tabs.appendChild(b)});
 fetch("routine.json").then(r=>r.json()).then(d=>{DAYS=d;render()}).catch(()=>{document.getElementById("list").innerHTML="<li><div></div><div class=\"h\">Could not load the routine.</div></li>"});setInterval(render,60000);
 document.getElementById("theme").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
