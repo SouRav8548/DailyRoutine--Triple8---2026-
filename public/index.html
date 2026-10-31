@@ -1,1020 +1,245 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>8:8:8 Daily Routine</title>
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="icon" href="/icon-192.png" />
-    <link rel="apple-touch-icon" href="/icon-192.png" />
-    <meta name="theme-color" content="#14213d" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #f3f6fb;
-        --card: #fff;
-        --ink: #14213d;
-        --mute: #5b6784;
-        --line: #dbe2f0;
-        --class: #2a44c9;
-        --self: #6f8cf0;
-        --tuition: #8a3ffc;
-        --free: #1f9d6b;
-        --sleep: #8791a8;
-        --now: #ffb703;
-        box-sizing: border-box;
-        padding-top: env(safe-area-inset-top, 0px);
-        padding-bottom: env(safe-area-inset-bottom, 0px);
-      }
-      @media (prefers-color-scheme: dark) {
-        :root:not([data-theme="light"]) {
-          --bg: #0d1426;
-          --card: #151e36;
-          --ink: #eaf0ff;
-          --mute: #9aa7c7;
-          --line: #26314f;
-          --class: #6b82ff;
-          --self: #4a66c9;
-          --tuition: #b384ff;
-          --free: #3ccf94;
-          --sleep: #6b7592;
-          color-scheme: dark;
-        }
-      }
-      :root[data-theme="dark"] {
-        --bg: #0d1426;
-        --card: #151e36;
-        --ink: #eaf0ff;
-        --mute: #9aa7c7;
-        --line: #26314f;
-        --class: #6b82ff;
-        --self: #4a66c9;
-        --tuition: #b384ff;
-        --free: #3ccf94;
-        --sleep: #6b7592;
-        color-scheme: dark;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      html {
-        scroll-padding-top: env(safe-area-inset-top, 0px);
-      }
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--ink);
-        font-family:
-          "Bricolage Grotesque",
-          system-ui,
-          -apple-system,
-          "Segoe UI",
-          sans-serif;
-        line-height: 1.45;
-      }
-      html,
-      body {
-        width: 100%;
-        min-height: 100%;
-      }
-      main {
-        width: 100%;
-        max-width: none;
-        margin: 0;
-        padding: 56px clamp(14px, 3vw, 48px) 48px;
-      }
-      header {
-        display: flex;
-        gap: 28px;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 26px;
-      }
-      .ring {
-        position: relative;
-        width: 190px;
-        height: 190px;
-        flex: none;
-      }
-      .ring svg {
-        width: 100%;
-        height: 100%;
-        transform: rotate(-90deg);
-      }
-      .ring circle {
-        fill: none;
-        stroke-width: 22;
-      }
-      .ring .c {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-content: center;
-        text-align: center;
-      }
-      .ring .c b {
-        font-size: 2.4rem;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-      }
-      .ring .c span {
-        font-size: 0.78rem;
-        color: var(--mute);
-      }
-      h1 {
-        margin: 0 0 6px;
-        font-size: clamp(2rem, 6vw, 3.2rem);
-        line-height: 1;
-        font-weight: 800;
-        letter-spacing: -0.035em;
-      }
-      header p {
-        margin: 0;
-        color: var(--mute);
-        max-width: 36ch;
-      }
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px 16px;
-        margin-top: 14px;
-        font-size: 0.85rem;
-      }
-      .legend i {
-        display: inline-block;
-        width: 11px;
-        height: 11px;
-        border-radius: 3px;
-        margin-right: 6px;
-        vertical-align: -1px;
-      }
-      nav {
-        display: flex;
-        gap: 6px;
-        overflow-x: auto;
-        padding-bottom: 6px;
-        margin-bottom: 12px;
-      }
-      nav button {
-        font: inherit;
-        font-weight: 600;
-        border: 1.5px solid var(--line);
-        background: var(--card);
-        color: var(--ink);
-        padding: 9px 16px;
-        border-radius: 999px;
-        cursor: pointer;
-        white-space: nowrap;
-      }
-      nav button[aria-selected="true"] {
-        background: var(--ink);
-        color: var(--bg);
-        border-color: var(--ink);
-      }
-      nav button:focus-visible,
-      .theme:focus-visible {
-        outline: 3px solid var(--now);
-        outline-offset: 2px;
-      }
-      .sum {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 22px;
-        margin: 0 0 14px;
-        color: var(--mute);
-        font-size: 0.95rem;
-      }
-      .sum b {
-        color: var(--ink);
-      }
-      ol {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 8px;
-      }
-      li {
-        display: grid;
-        grid-template-columns: 96px 1fr auto;
-        gap: 14px;
-        align-items: center;
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-left: 6px solid var(--c);
-        border-radius: 10px;
-        padding: 12px 14px;
-      }
-      li.now {
-        outline: 3px solid var(--now);
-        box-shadow: 0 0 0 6px color-mix(in srgb, var(--now) 22%, transparent);
-      }
-      li.past {
-        opacity: 0.55;
-      }
-      .t {
-        font-weight: 600;
-        font-size: 0.92rem;
-        font-variant-numeric: tabular-nums;
-        line-height: 1.25;
-      }
-      .t small {
-        display: block;
-        color: var(--mute);
-        font-weight: 400;
-      }
-      .h {
-        font-weight: 600;
-      }
-      .h small {
-        display: block;
-        color: var(--mute);
-        font-weight: 400;
-        font-size: 0.85rem;
-      }
-      .d {
-        font-size: 0.82rem;
-        color: var(--mute);
-        text-align: right;
-        white-space: nowrap;
-      }
-      .tag {
-        display: inline-block;
-        background: var(--now);
-        color: #14213d;
-        font-size: 0.72rem;
-        font-weight: 800;
-        padding: 1px 8px;
-        border-radius: 999px;
-        margin-left: 8px;
-        vertical-align: 1px;
-      }
-      .tips {
-        margin-top: 30px;
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 6px 20px 14px;
-      }
-      .tips h2 {
-        font-size: 1.15rem;
-        margin: 14px 0 4px;
-      }
-      .tips ul {
-        margin: 0;
-        padding-left: 18px;
-        color: var(--mute);
-      }
-      .tips li {
-        display: list-item;
-        background: none;
-        border: 0;
-        border-radius: 0;
-        padding: 3px 0;
-        outline: 0;
-        box-shadow: none;
-      }
-      .theme {
-        position: fixed;
-        right: 14px;
-        top: calc(12px + env(safe-area-inset-top, 0px));
-        font: inherit;
-        font-size: 0.8rem;
-        border: 1.5px solid var(--line);
-        background: var(--card);
-        color: var(--ink);
-        padding: 6px 12px;
-        border-radius: 999px;
-        cursor: pointer;
-      }
-      @media (max-width: 520px) {
-        li {
-          grid-template-columns: 78px 1fr;
-        }
-        .d {
-          grid-column: 2;
-          text-align: left;
-        }
-        .ring {
-          width: 150px;
-          height: 150px;
-        }
-        .ring .c b {
-          font-size: 1.9rem;
-        }
-      }
-      @media (min-width: 960px) {
-        main {
-          display: grid;
-          grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
-          column-gap: clamp(24px, 4vw, 64px);
-          align-items: start;
-        }
-        header {
-          grid-column: 1;
-          grid-row: 1 / span 6;
-          position: sticky;
-          top: 56px;
-          flex-direction: column;
-          align-items: flex-start;
-          margin-bottom: 0;
-        }
-        .ring {
-          width: 240px;
-          height: 240px;
-        }
-        .ring .c b {
-          font-size: 3rem;
-        }
-        nav,
-        .sum,
-        ol,
-        .tips,
-        .notify {
-          grid-column: 2;
-        }
-        nav {
-          flex-wrap: wrap;
-          overflow: visible;
-        }
-        li {
-          padding: 14px 18px;
-          grid-template-columns: 110px 1fr auto;
-        }
-      }
-      @media (min-width: 1500px) {
-        ol {
-          grid-template-columns: 1fr 1fr;
-        }
-        li.now {
-          z-index: 1;
-        }
-      }
-      @media (min-width: 600px) and (max-width: 959px) {
-        .ring {
-          width: 170px;
-          height: 170px;
-        }
-        li {
-          grid-template-columns: 110px 1fr auto;
-        }
-        .d {
-          grid-column: auto;
-          text-align: right;
-        }
-      }
-      .notify {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px 16px;
-        align-items: center;
-        justify-content: space-between;
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-left: 6px solid var(--now);
-        border-radius: 10px;
-        padding: 12px 14px;
-        margin-bottom: 14px;
-      }
-      .notify p {
-        margin: 0;
-        font-size: 0.92rem;
-        color: var(--mute);
-        flex: 1 1 240px;
-      }
-      .notify p b {
-        color: var(--ink);
-      }
-      .notify button {
-        font: inherit;
-        font-weight: 600;
-        background: var(--ink);
-        color: var(--bg);
-        border: 0;
-        padding: 9px 16px;
-        border-radius: 999px;
-        cursor: pointer;
-      }
-      ol.week {
-        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-        gap: 14px;
-        align-items: start;
-      }
-      li.dayc {
-        display: block;
-        border-left: 1px solid var(--line);
-        padding: 12px 12px 8px;
-      }
-      li.dayc.today {
-        outline: 3px solid var(--now);
-      }
-      li.dayc h3 {
-        margin: 0 0 6px;
-        font-size: 1.05rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-      li.dayc h3 small {
-        margin-left: auto;
-        font-weight: 400;
-        color: var(--mute);
-        font-size: 0.8rem;
-      }
-      .r {
-        border-left: 5px solid var(--c);
-        border-radius: 6px;
-        padding: 6px 10px;
-        margin-bottom: 5px;
-        background: color-mix(in srgb, var(--c) 9%, transparent);
-      }
-      .r.now {
-        outline: 2px solid var(--now);
-        background: color-mix(in srgb, var(--now) 25%, transparent);
-      }
-      .rt {
-        display: block;
-        font-size: 0.76rem;
-        color: var(--mute);
-        font-variant-numeric: tabular-nums;
-      }
-      .rh {
-        display: block;
-        font-weight: 600;
-        font-size: 0.92rem;
-      }
-      .rh small {
-        display: block;
-        color: var(--mute);
-        font-weight: 400;
-        font-size: 0.8rem;
-      }
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>8:8:8 Daily Routine</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<meta name="theme-color" content="#14213d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6fb;--card:#fff;--ink:#14213d;--mute:#5b6784;--line:#dbe2f0;
+--class:#2a44c9;--self:#6f8cf0;--tuition:#8a3ffc;--free:#1f9d6b;--sleep:#8791a8;--now:#ffb703;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1426;--card:#151e36;--ink:#eaf0ff;--mute:#9aa7c7;--line:#26314f;--class:#6b82ff;--self:#4a66c9;--tuition:#b384ff;--free:#3ccf94;--sleep:#6b7592;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1426;--card:#151e36;--ink:#eaf0ff;--mute:#9aa7c7;--line:#26314f;--class:#6b82ff;--self:#4a66c9;--tuition:#b384ff;--free:#3ccf94;--sleep:#6b7592;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45}
+html,body{width:100%;min-height:100%}
+main{width:100%;max-width:none;margin:0;padding:56px clamp(14px,3vw,48px) 48px}
+header{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-bottom:26px}
+.ring{position:relative;width:190px;height:190px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:22}
+.ring .c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring .c b{font-size:2.4rem;font-weight:800;letter-spacing:-.03em}
+.ring .c span{font-size:.78rem;color:var(--mute)}
+h1{margin:0 0 6px;font-size:clamp(2rem,6vw,3.2rem);line-height:1;font-weight:800;letter-spacing:-.035em}
+header p{margin:0;color:var(--mute);max-width:36ch}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:.85rem}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px}
+nav button{font:inherit;font-weight:600;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+nav button:focus-visible,.theme:focus-visible{outline:3px solid var(--now);outline-offset:2px}
+.sum{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 14px;color:var(--mute);font-size:.95rem}
+.sum b{color:var(--ink)}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li{display:grid;grid-template-columns:96px 1fr auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:12px 14px}
+li.now{outline:3px solid var(--now);box-shadow:0 0 0 6px color-mix(in srgb,var(--now) 22%,transparent)}
+li.past{opacity:.55}
+.t{font-weight:600;font-size:.92rem;font-variant-numeric:tabular-nums;line-height:1.25}
+.t small{display:block;color:var(--mute);font-weight:400}
+.h{font-weight:600}
+.h small{display:block;color:var(--mute);font-weight:400;font-size:.85rem}
+.d{font-size:.82rem;color:var(--mute);text-align:right;white-space:nowrap}
+.tag{display:inline-block;background:var(--now);color:#14213d;font-size:.72rem;font-weight:800;padding:1px 8px;border-radius:999px;margin-left:8px;vertical-align:1px}
+.tips{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 20px 14px}
+.tips h2{font-size:1.15rem;margin:14px 0 4px}
+.tips ul{margin:0;padding-left:18px;color:var(--mute)}
+.tips li{display:list-item;background:none;border:0;border-radius:0;padding:3px 0;outline:0;box-shadow:none}
+.theme{position:fixed;right:14px;top:calc(12px + env(safe-area-inset-top,0px));font:inherit;font-size:.8rem;border:1.5px solid var(--line);background:var(--card);color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer}
+@media (max-width:520px){li{grid-template-columns:78px 1fr;}.d{grid-column:2;text-align:left}.ring{width:150px;height:150px}.ring .c b{font-size:1.9rem}}
+@media (min-width:960px){
+main{display:grid;grid-template-columns:minmax(320px,400px) minmax(0,1fr);column-gap:clamp(24px,4vw,64px);align-items:start}
+header{grid-column:1;grid-row:1 / span 6;position:sticky;top:56px;flex-direction:column;align-items:flex-start;margin-bottom:0}
+.ring{width:240px;height:240px}.ring .c b{font-size:3rem}
+nav,.sum,ol,.tips,.notify{grid-column:2}
+nav{flex-wrap:wrap;overflow:visible}
+li{padding:14px 18px;grid-template-columns:110px 1fr auto}
+}
+@media (min-width:1500px){ol{grid-template-columns:1fr 1fr}li.now{z-index:1}}
+@media (min-width:600px) and (max-width:959px){.ring{width:170px;height:170px}li{grid-template-columns:110px 1fr auto}.d{grid-column:auto;text-align:right}}
+.notify{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--now);border-radius:10px;padding:12px 14px;margin-bottom:14px}
+.notify p{margin:0;font-size:.92rem;color:var(--mute);flex:1 1 240px}.notify p b{color:var(--ink)}
+.notify button{font:inherit;font-weight:600;background:var(--ink);color:var(--bg);border:0;padding:9px 16px;border-radius:999px;cursor:pointer}
+ol.week{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;align-items:start}
+li.dayc{display:block;border-left:1px solid var(--line);padding:12px 12px 8px}
+li.dayc.today{outline:3px solid var(--now)}
+li.dayc h3{margin:0 0 6px;font-size:1.05rem;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+li.dayc h3 small{margin-left:auto;font-weight:400;color:var(--mute);font-size:.8rem}
+.r{border-left:5px solid var(--c);border-radius:6px;padding:6px 10px;margin-bottom:5px;background:color-mix(in srgb,var(--c) 9%,transparent)}
+.r.now{outline:2px solid var(--now);background:color-mix(in srgb,var(--now) 25%,transparent)}
+.rt{display:block;font-size:.76rem;color:var(--mute);font-variant-numeric:tabular-nums}
+.rh{display:block;font-weight:600;font-size:.92rem}
+.rh small{display:block;color:var(--mute);font-weight:400;font-size:.8rem}
 
-      /* ---- added: personal branding, TRIPLE 8 title, motivation card, footer ---- */
-      .sm-hero {
-        padding: 22px clamp(14px, 3vw, 48px) 0;
-        margin-bottom: -24px;
-        position: relative;
-        z-index: 1;
-        pointer-events: none;
-      }
-      .sm-name {
-        margin: 0;
-        font-size: clamp(1.7rem, 5.5vw, 2.6rem);
-        line-height: 1.05;
-        font-weight: 800;
-        letter-spacing: -0.035em;
-        color: var(--ink);
-        animation: sm-rise 0.7s ease both;
-      }
-      .sm-name span {
-        background: linear-gradient(90deg, var(--class), var(--tuition));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .sm-bar {
-        display: block;
-        height: 4px;
-        width: 0;
-        max-width: 86px;
-        border-radius: 4px;
-        background: var(--now);
-        margin-top: 8px;
-        animation: sm-grow 0.9s 0.25s ease forwards;
-      }
-      .sm-t8 {
-        flex: 0 0 100%;
-        margin: 0 0 -14px;
-        font-size: clamp(1.3rem, 4vw, 1.9rem);
-        font-weight: 800;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        line-height: 1.1;
-      }
-      .sm-t8 span {
-        background: linear-gradient(90deg, var(--class), var(--tuition));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .sm-t8::after {
-        content: "";
-        display: block;
-        height: 3px;
-        width: 56px;
-        border-radius: 3px;
-        background: var(--now);
-        margin-top: 8px;
-      }
-      .sm-quote {
-        position: relative;
-        overflow: hidden;
-        margin-top: 18px;
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-left: 6px solid var(--now);
-        border-radius: 12px;
-        padding: 22px 22px 22px 74px;
-        animation: sm-rise 0.8s ease both;
-      }
-      .sm-quote::before {
-        content: "";
-        position: absolute;
-        width: 220px;
-        height: 220px;
-        right: -70px;
-        top: -90px;
-        border-radius: 50%;
-        background: radial-gradient(
-          circle,
-          color-mix(in srgb, var(--now) 30%, transparent),
-          transparent 70%
-        );
-        animation: sm-glow 5s ease-in-out infinite;
-      }
-      .sm-key {
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        width: 38px;
-        height: 38px;
-        margin-top: -19px;
-        color: var(--now);
-        animation: sm-float 3.6s ease-in-out infinite;
-      }
-      .sm-label {
-        margin: 0 0 4px;
-        font-size: 0.74rem;
-        font-weight: 800;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--mute);
-      }
-      .sm-text {
-        position: relative;
-        margin: 0;
-        font-size: clamp(1.15rem, 3.2vw, 1.65rem);
-        font-weight: 800;
-        letter-spacing: -0.02em;
-        line-height: 1.25;
-      }
-      .sm-text b {
-        background: linear-gradient(
-          transparent 62%,
-          color-mix(in srgb, var(--now) 55%, transparent) 62%
-        );
-      }
-      .sm-foot {
-        border-top: 1px solid var(--line);
-        padding: 18px clamp(14px, 3vw, 48px)
-          calc(18px + env(safe-area-inset-bottom, 0px));
-        text-align: center;
-        color: var(--mute);
-        font-size: 0.88rem;
-      }
-      .sm-foot b {
-        color: var(--ink);
-        font-weight: 600;
-      }
-      @keyframes sm-rise {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        to {
-          opacity: 1;
-          transform: none;
-        }
-      }
-      @keyframes sm-grow {
-        to {
-          width: 86px;
-        }
-      }
-      @keyframes sm-glow {
-        0%,
-        100% {
-          opacity: 0.55;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1.12);
-        }
-      }
-      @keyframes sm-float {
-        0%,
-        100% {
-          transform: translateY(0) rotate(-8deg);
-        }
-        50% {
-          transform: translateY(-4px) rotate(8deg);
-        }
-      }
-      @media (min-width: 960px) {
-        .sm-quote {
-          grid-column: 2;
-        }
-      }
-      @media (max-width: 520px) {
-        .sm-quote {
-          padding: 18px 16px 18px 62px;
-        }
-        .sm-key {
-          left: 14px;
-          width: 32px;
-          height: 32px;
-          margin-top: -16px;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .sm-name,
-        .sm-bar,
-        .sm-quote,
-        .sm-quote::before,
-        .sm-key {
-          animation: none;
-        }
-        .sm-bar {
-          width: 86px;
-        }
-      }
+/* ---- added: personal branding, TRIPLE 8 title, motivation card, footer ---- */
+.sm-hero{padding:22px clamp(14px,3vw,48px) 0;margin-bottom:-24px;position:relative;z-index:1;pointer-events:none}
+.sm-name{margin:0;font-size:clamp(1.7rem,5.5vw,2.6rem);line-height:1.05;font-weight:800;letter-spacing:-.035em;color:var(--ink);animation:sm-rise .7s ease both}
+.sm-name span{background:linear-gradient(90deg,var(--class),var(--tuition));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sm-bar{display:block;height:4px;width:0;max-width:86px;border-radius:4px;background:var(--now);margin-top:8px;animation:sm-grow .9s .25s ease forwards}
+.sm-t8{flex:0 0 100%;margin:0 0 -14px;font-size:clamp(1.3rem,4vw,1.9rem);font-weight:800;letter-spacing:.22em;text-transform:uppercase;line-height:1.1}
+.sm-t8 span{background:linear-gradient(90deg,var(--class),var(--tuition));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sm-t8::after{content:"";display:block;height:3px;width:56px;border-radius:3px;background:var(--now);margin-top:8px}
+.sm-quote{position:relative;overflow:hidden;margin-top:18px;background:var(--card);border:1px solid var(--line);border-left:6px solid var(--now);border-radius:12px;padding:22px 22px 22px 74px;animation:sm-rise .8s ease both}
+.sm-quote::before{content:"";position:absolute;width:220px;height:220px;right:-70px;top:-90px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--now) 30%,transparent),transparent 70%);animation:sm-glow 5s ease-in-out infinite}
+.sm-key{position:absolute;left:20px;top:50%;width:38px;height:38px;margin-top:-19px;color:var(--now);animation:sm-float 3.6s ease-in-out infinite}
+.sm-label{margin:0 0 4px;font-size:.74rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--mute)}
+.sm-text{position:relative;margin:0;font-size:clamp(1.15rem,3.2vw,1.65rem);font-weight:800;letter-spacing:-.02em;line-height:1.25}
+.sm-text b{background:linear-gradient(transparent 62%,color-mix(in srgb,var(--now) 55%,transparent) 62%)}
+.sm-foot{border-top:1px solid var(--line);padding:18px clamp(14px,3vw,48px) calc(18px + env(safe-area-inset-bottom,0px));text-align:center;color:var(--mute);font-size:.88rem}
+.sm-foot b{color:var(--ink);font-weight:600}
+@keyframes sm-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes sm-grow{to{width:86px}}
+@keyframes sm-glow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes sm-float{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-4px) rotate(8deg)}}
+@media (min-width:960px){.sm-quote{grid-column:2}}
+@media (max-width:520px){.sm-quote{padding:18px 16px 18px 62px}.sm-key{left:14px;width:32px;height:32px;margin-top:-16px}}
+@media (prefers-reduced-motion:reduce){.sm-name,.sm-bar,.sm-quote,.sm-quote::before,.sm-key{animation:none}.sm-bar{width:86px}}
 
-      /* ---- added: course line under the name ---- */
-      .sm-sub {
-        display: inline-block;
-        margin: 8px 0 0;
-        padding: 4px 12px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        background: var(--card);
-        color: var(--mute);
-        font-size: clamp(0.78rem, 2.4vw, 0.92rem);
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        animation: sm-rise 0.8s 0.15s ease both;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .sm-sub {
-          animation: none;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <button
-      class="theme"
-      id="theme"
-      type="button"
-      aria-label="Switch light or dark theme"
-    >
-      Theme
-    </button>
-    <div class="sm-hero">
-      <h2 class="sm-name">SouRav <span>Maity</span></h2>
-      <p class="sm-sub">M. Tech. [1st Semester] -- 2026</p>
-      <i class="sm-bar"></i>
+/* ---- added: course line under the name ---- */
+.sm-sub{display:inline-block;margin:8px 0 0;padding:4px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--mute);font-size:clamp(.78rem,2.4vw,.92rem);font-weight:600;letter-spacing:.06em;animation:sm-rise .8s .15s ease both}
+@media (prefers-reduced-motion:reduce){.sm-sub{animation:none}}
+</style>
+</head>
+<body>
+<button class="theme" id="theme" type="button" aria-label="Switch light or dark theme">Theme</button>
+<div class="sm-hero"><h2 class="sm-name">SouRav <span>Maity</span></h2><p class="sm-sub">M. Tech. [1st Semester]</p><i class="sm-bar"></i></div>
+<main>
+<header>
+  <div class="sm-t8"><span>Triple 8</span></div>
+  <div class="ring" aria-label="24 hours split into 8 hours study, 8 hours free, 8 hours sleep">
+    
+    <svg viewBox="0 0 100 100" id="donut"></svg>
+    <div class="c"><b>8 : 8 : 8</b><span>study · free · sleep</span></div>
+  </div>
+  <div>
+    <h1>My daily routine</h1>
+    <p>Classes, tuition and self-study fit into 8 hours. Sleep gets 8. The last 8 are yours.</p>
+    <div class="legend">
+      <span><i style="background:var(--class)"></i>College class</span>
+      <span><i style="background:var(--self)"></i>Self-study</span>
+      <span><i style="background:var(--tuition)"></i>Tuition</span>
+      <span><i style="background:var(--free)"></i>Free time</span>
+      <span><i style="background:var(--sleep)"></i>Sleep</span>
     </div>
-    <main>
-      <header>
-        <div class="sm-t8"><span>Triple 8</span></div>
-        <div
-          class="ring"
-          aria-label="24 hours split into 8 hours study, 8 hours free, 8 hours sleep"
-        >
-          <svg viewBox="0 0 100 100" id="donut"></svg>
-          <div class="c"><b>8 : 8 : 8</b><span>study · free · sleep</span></div>
-        </div>
-        <div>
-          <h1>My daily routine</h1>
-          <p>
-            Classes, tuition and self-study fit into 8 hours. Sleep gets 8. The
-            last 8 are yours.
-          </p>
-          <div class="legend">
-            <span><i style="background: var(--class)"></i>College class</span>
-            <span><i style="background: var(--self)"></i>Self-study</span>
-            <span><i style="background: var(--tuition)"></i>Tuition</span>
-            <span><i style="background: var(--free)"></i>Free time</span>
-            <span><i style="background: var(--sleep)"></i>Sleep</span>
-          </div>
-        </div>
-      </header>
+  </div>
+</header>
 
-      <div class="notify">
-        <p id="nstatus">
-          <b>Task reminders are off.</b> Turn them on to get a notification
-          every 30 seconds when a task starts, until you open this site.
-        </p>
-        <button id="nbtn" type="button">Turn on reminders</button>
-      </div>
-      <nav role="tablist" id="tabs" aria-label="Choose a day"></nav>
-      <p class="sum" id="sum"></p>
-      <ol id="list"></ol>
+<div class="notify"><p id="nstatus"><b>Task reminders are off.</b> Turn them on to get a notification every 30 seconds when a task starts, until you open this site.</p><button id="nbtn" type="button">Turn on reminders</button></div>
+<nav role="tablist" id="tabs" aria-label="Choose a day"></nav>
+<p class="sum" id="sum"></p>
+<ol id="list"></ol>
 
-      <section class="tips">
-        <h2>Tips to make it work</h2>
-        <ul>
-          <li>
-            Use the gaps between classes for self-study in the college library.
-            That keeps evenings free.
-          </li>
-          <li>
-            Tuition is planned as 2 hours. If it runs to 2.5 hours, you lose
-            only 30 minutes of free time, and the weekday self-study was already
-            trimmed to make room for it.
-          </li>
-          <li>
-            Wednesday and Thursday are the heaviest days (labs plus tuition), so
-            take the free morning slot to rest and sleep on time.
-          </li>
-          <li>Put the phone away by 10:30 PM to fall asleep by 11:00.</li>
-          <li>
-            Saturday evening is the main time for friends. Weekday evenings suit
-            lighter hangouts or games.
-          </li>
-          <li>Sunday stays a rest day apart from the two tuition sessions.</li>
-        </ul>
-      </section>
+<section class="tips">
+  <h2>Tips to make it work</h2>
+  <ul>
+    <li>Use the gaps between classes for self-study in the college library. That keeps evenings free.</li>
+    <li>Tuition is planned as 2 hours. If it runs to 2.5 hours, you lose only 30 minutes of free time, and the weekday self-study was already trimmed to make room for it.</li>
+    <li>Wednesday and Thursday are the heaviest days (labs plus tuition), so take the free morning slot to rest and sleep on time.</li>
+    <li>Put the phone away by 10:30 PM to fall asleep by 11:00.</li>
+    <li>Saturday evening is the main time for friends. Weekday evenings suit lighter hangouts or games.</li>
+    <li>Sunday stays a rest day apart from the two tuition sessions.</li>
+  </ul>
+</section>
 
-      <section class="sm-quote" aria-label="Motivation">
-        <svg
-          class="sm-key"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <circle cx="7.5" cy="15.5" r="4.5" />
-          <path d="M10.7 12.3 21 2M16 7l3 3M14 9l2 2" />
-        </svg>
-        <p class="sm-label">Discipline &amp; Motivation</p>
-        <p class="sm-text">
-          <b>Discipline</b> is the most powerful key to success.
-        </p>
-      </section>
-    </main>
+<section class="sm-quote" aria-label="Motivation">
+  <svg class="sm-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 21 2M16 7l3 3M14 9l2 2"/></svg>
+  <p class="sm-label">Discipline &amp; Motivation</p>
+  <p class="sm-text"><b>Discipline</b> is the most powerful key to success.</p>
+</section>
+</main>
 
-    <footer class="sm-foot">
-      This website is developed &amp; maintained by <b>xCODER</b> | Known as
-      <b>Sourav Maity</b>
-    </footer>
+<footer class="sm-foot">This website is developed &amp; maintained by <b>xCODER</b> | Known as <b>Sourav Maity</b></footer>
 
-    <script>
-      const F = "free",
-        C = "class",
-        S = "self",
-        T = "tuition";
-      let DAYS = {};
-      const SLEEP = [1380, 1860, "sleep", "Sleep", "11:00 PM to 7:00 AM"];
-      const names = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ];
-      const col = (t) => `var(--${t})`;
-      const fmt = (x) => {
-        x = x % 1440;
-        let h = Math.floor(x / 60),
-          mm = x % 60,
-          ap = h >= 12 ? "PM" : "AM";
-        h = h % 12 || 12;
-        return h + ":" + String(mm).padStart(2, "0") + " " + ap;
-      };
-      const dur = (a, b) => {
-        const d = b - a,
-          h = Math.floor(d / 60),
-          mm = d % 60;
-        return (
-          (h ? h + " h" : "") + (h && mm ? " " : "") + (mm ? mm + " min" : "")
-        );
-      };
+<script>
+const F="free",C="class",S="self",T="tuition";
+let DAYS={};
+const SLEEP=[1380,1860,"sleep","Sleep","11:00 PM to 7:00 AM"];
+const names=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const col=t=>`var(--${t})`;
+const fmt=x=>{x=x%1440;let h=Math.floor(x/60),mm=x%60,ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+String(mm).padStart(2,"0")+" "+ap};
+const dur=(a,b)=>{const d=b-a,h=Math.floor(d/60),mm=d%60;return (h?h+" h":"")+(h&&mm?" ":"")+(mm?mm+" min":"")};
 
-      function donut(work, free) {
-        const R = 39,
-          Cc = 2 * Math.PI * R,
-          parts = [
-            [work, "var(--class)"],
-            [free, "var(--free)"],
-            [8, "var(--sleep)"],
-          ],
-          tot = work + free + 8;
-        let off = 0,
-          out = `<circle cx="50" cy="50" r="${R}" stroke="var(--line)"/>`;
-        parts.forEach(([v, c]) => {
-          const len = (v / tot) * Cc;
-          out += `<circle cx="50" cy="50" r="${R}" stroke="${c}" stroke-width="22" stroke-dasharray="${len - 0.8} ${Cc}" stroke-dashoffset="${-off}" style="stroke-width:20"/>`;
-          off += len;
-        });
-        document.getElementById("donut").innerHTML = out;
-      }
+function donut(work,free){
+  const R=39,Cc=2*Math.PI*R,parts=[[work,"var(--class)"],[free,"var(--free)"],[8,"var(--sleep)"]],tot=work+free+8;
+  let off=0,out=`<circle cx="50" cy="50" r="${R}" stroke="var(--line)"/>`;
+  parts.forEach(([v,c])=>{const len=v/tot*Cc;out+=`<circle cx="50" cy="50" r="${R}" stroke="${c}" stroke-width="22" stroke-dasharray="${len-.8} ${Cc}" stroke-dashoffset="${-off}" style="stroke-width:20"/>`;off+=len});
+  document.getElementById("donut").innerHTML=out;
+}
 
-      let cur = (new Date().getDay() + 6) % 7; // opens on today; -1 = full week, 0 = Monday ... 6 = Sunday
-      function markTabs() {
-        document
-          .querySelectorAll("#tabs button")
-          .forEach((b, i) => b.setAttribute("aria-selected", i - 1 == cur));
-      }
-      function weekHTML(nm, ti) {
-        return names
-          .map((n, i) => {
-            const rows = [...DAYS[n], SLEEP];
-            let w = 0;
-            rows.forEach((r) => {
-              if (r[2] == C || r[2] == S || r[2] == T) w += r[1] - r[0];
-            });
-            const isT = i === ti;
-            return (
-              `<li class="dayc${isT ? " today" : ""}"><h3>${n}${isT ? '<span class="tag">Today</span>' : ""}<small>${dur(0, w)} study</small></h3>` +
-              rows
-                .map((r) => {
-                  const [a, b, t, title, note] = r;
-                  const nowIn =
-                    isT &&
-                    ((nm >= a && nm < b) ||
-                      (t == "sleep" && (nm >= a || nm < b - 1440)));
-                  return `<div class="r${nowIn ? " now" : ""}" style="--c:${col(t)}"><span class="rt">${fmt(a)} to ${fmt(b)}</span><span class="rh">${title}${nowIn ? '<span class="tag">Now</span>' : ""}${note ? `<small>${note}</small>` : ""}</span></div>`;
-                })
-                .join("") +
-              `</li>`
-            );
-          })
-          .join("");
-      }
-      function render() {
-        if (!DAYS.Monday) return;
-        if (cur === -1) {
-          const d = new Date();
-          donut(8, 8);
-          document.getElementById("sum").innerHTML =
-            "<span>Every day: <b>about 8 h</b> study, <b>about 8 h</b> free, <b>8 h</b> sleep</span><span>Tap a day for the detailed view</span>";
-          const L = document.getElementById("list");
-          L.className = "week";
-          L.innerHTML = weekHTML(
-            d.getHours() * 60 + d.getMinutes(),
-            (d.getDay() + 6) % 7,
-          );
-          markTabs();
-          return;
-        }
-        const name = names[cur];
-        if (!DAYS[name]) return;
-        const rows = [...DAYS[name], SLEEP];
-        const now = new Date(),
-          isToday = (now.getDay() + 6) % 7 === cur,
-          nm = now.getHours() * 60 + now.getMinutes();
-        let work = 0;
-        rows.forEach((r) => {
-          if (r[2] == C || r[2] == S || r[2] == T) work += r[1] - r[0];
-        });
-        const wh = work / 60,
-          fh = 16 - wh;
-        donut(Math.round(wh * 10) / 10, Math.round(fh * 10) / 10);
-        document.getElementById("sum").innerHTML =
-          `<span>Study and work <b>${dur(0, work)}</b></span><span>Free <b>${dur(0, Math.round(fh * 60))}</b></span><span>Sleep <b>8 h</b></span>`;
-        document.getElementById("list").className = "";
-        document.getElementById("list").innerHTML = rows
-          .map((r) => {
-            const [a, b, t, title, note] = r;
-            const nowIn =
-              isToday &&
-              ((nm >= a && nm < b) ||
-                (t == "sleep" && (nm >= a || nm < b - 1440)));
-            const past = isToday && nm >= b && t != "sleep";
-            return `<li class="${nowIn ? "now" : ""} ${past ? "past" : ""}" style="--c:${col(t)}"><div class="t">${fmt(a)}<small>to ${fmt(b)}</small></div><div class="h">${title}${nowIn ? '<span class="tag">Now</span>' : ""}${note ? `<small>${note}</small>` : ""}</div><div class="d">${dur(a, b)}</div></li>`;
-          })
-          .join("");
-        markTabs();
-      }
-      const tabs = document.getElementById("tabs");
-      {
-        const w = document.createElement("button");
-        w.type = "button";
-        w.role = "tab";
-        w.textContent = "Full week";
-        w.onclick = () => {
-          cur = -1;
-          render();
-        };
-        tabs.appendChild(w);
-      }
-      names.forEach((n, i) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.role = "tab";
-        b.textContent = n.slice(0, 3);
-        b.setAttribute("aria-label", n);
-        b.onclick = () => {
-          cur = i;
-          render();
-          history.replaceState && 0;
-        };
-        tabs.appendChild(b);
-      });
-      fetch("routine.json")
-        .then((r) => r.json())
-        .then((d) => {
-          DAYS = d;
-          render();
-          const nw = document.querySelector("li.now");
-          if (nw)
-            setTimeout(
-              () => nw.scrollIntoView({ block: "center", behavior: "smooth" }),
-              300,
-            );
-        })
-        .catch(() => {
-          document.getElementById("list").innerHTML =
-            '<li><div></div><div class="h">Could not load the routine.</div></li>';
-        });
-      setInterval(render, 60000);
-      document.getElementById("theme").onclick = () => {
-        const r = document.documentElement,
-          dark = r.dataset.theme
-            ? r.dataset.theme == "dark"
-            : matchMedia("(prefers-color-scheme:dark)").matches;
-        r.dataset.theme = dark ? "light" : "dark";
-      };
+let cur=(new Date().getDay()+6)%7; // opens on today; -1 = full week, 0 = Monday ... 6 = Sunday
+function markTabs(){document.querySelectorAll("#tabs button").forEach((b,i)=>b.setAttribute("aria-selected",(i-1)==cur))}
+function weekHTML(nm,ti){
+  return names.map((n,i)=>{
+    const rows=[...DAYS[n],SLEEP];let w=0;rows.forEach(r=>{if(r[2]==C||r[2]==S||r[2]==T)w+=r[1]-r[0]});
+    const isT=i===ti;
+    return `<li class="dayc${isT?" today":""}"><h3>${n}${isT?'<span class="tag">Today</span>':""}<small>${dur(0,w)} study</small></h3>`+rows.map(r=>{
+      const [a,b,t,title,note]=r;
+      const nowIn=isT&&((nm>=a&&nm<b)||(t=="sleep"&&(nm>=a||nm<b-1440)));
+      return `<div class="r${nowIn?" now":""}" style="--c:${col(t)}"><span class="rt">${fmt(a)} to ${fmt(b)}</span><span class="rh">${title}${nowIn?'<span class="tag">Now</span>':""}${note?`<small>${note}</small>`:""}</span></div>`}).join("")+`</li>`}).join("");
+}
+function render(){
+  if(!DAYS.Monday)return;
+  if(cur===-1){
+    const d=new Date();
+    donut(8,8);
+    document.getElementById("sum").innerHTML='<span>Every day: <b>about 8 h</b> study, <b>about 8 h</b> free, <b>8 h</b> sleep</span><span>Tap a day for the detailed view</span>';
+    const L=document.getElementById("list");L.className="week";L.innerHTML=weekHTML(d.getHours()*60+d.getMinutes(),(d.getDay()+6)%7);
+    markTabs();return;
+  }
+  const name=names[cur];if(!DAYS[name])return;const rows=[...DAYS[name],SLEEP];
+  const now=new Date(),isToday=((now.getDay()+6)%7)===cur,nm=now.getHours()*60+now.getMinutes();
+  let work=0;rows.forEach(r=>{if(r[2]==C||r[2]==S||r[2]==T)work+=r[1]-r[0]});
+  const wh=work/60,fh=16-wh;
+  donut(Math.round(wh*10)/10,Math.round(fh*10)/10);
+  document.getElementById("sum").innerHTML=`<span>Study and work <b>${dur(0,work)}</b></span><span>Free <b>${dur(0,Math.round(fh*60))}</b></span><span>Sleep <b>8 h</b></span>`;
+  document.getElementById("list").className="";document.getElementById("list").innerHTML=rows.map(r=>{
+    const [a,b,t,title,note]=r;
+    const nowIn=isToday&&((nm>=a&&nm<b)||(t=="sleep"&&(nm>=a||nm<b-1440)));
+    const past=isToday&&nm>=b&&t!="sleep";
+    return `<li class="${nowIn?"now":""} ${past?"past":""}" style="--c:${col(t)}"><div class="t">${fmt(a)}<small>to ${fmt(b)}</small></div><div class="h">${title}${nowIn?'<span class="tag">Now</span>':""}${note?`<small>${note}</small>`:""}</div><div class="d">${dur(a,b)}</div></li>`}).join("");
+  markTabs();
+}
+const tabs=document.getElementById("tabs");
+{const w=document.createElement("button");w.type="button";w.role="tab";w.textContent="Full week";w.onclick=()=>{cur=-1;render()};tabs.appendChild(w)}
+names.forEach((n,i)=>{const b=document.createElement("button");b.type="button";b.role="tab";b.textContent=n.slice(0,3);b.setAttribute("aria-label",n);b.onclick=()=>{cur=i;render();history.replaceState&&0};tabs.appendChild(b)});
+fetch("routine.json").then(r=>r.json()).then(d=>{DAYS=d;render();const nw=document.querySelector("li.now");if(nw)setTimeout(()=>nw.scrollIntoView({block:"center",behavior:"smooth"}),300)}).catch(()=>{document.getElementById("list").innerHTML="<li><div></div><div class=\"h\">Could not load the routine.</div></li>"});setInterval(render,60000);
+document.getElementById("theme").onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;r.dataset.theme=dark?"light":"dark"};
 
-      /* ---- reminders ---- */
-      const nStatus = document.getElementById("nstatus"),
-        nBtn = document.getElementById("nbtn");
-      const b64 = (s) => {
-        const r = (s + "=".repeat((4 - (s.length % 4)) % 4))
-          .replace(/-/g, "+")
-          .replace(/_/g, "/");
-        return Uint8Array.from(atob(r), (c) => c.charCodeAt(0));
-      };
-      async function ack() {
-        try {
-          await fetch("/api/ack", { method: "POST" });
-        } catch (e) {}
-      }
-      async function setupNotify(ask) {
-        if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
-          nStatus.innerHTML =
-            "<b>Reminders need a supported browser.</b> On iPhone: tap Share, choose Add to Home Screen, then open the app from your home screen.";
-          nBtn.hidden = true;
-          return;
-        }
-        try {
-          const reg = await navigator.serviceWorker.register("/sw.js");
-          let sub = await reg.pushManager.getSubscription();
-          if (Notification.permission === "denied") {
-            nStatus.innerHTML =
-              "<b>Notifications are blocked.</b> Allow them in your browser's site settings, then reload.";
-            return;
-          }
-          if (!sub && ask) {
-            if ((await Notification.requestPermission()) !== "granted") {
-              nStatus.innerHTML =
-                "<b>Permission not given.</b> Tap the button to try again.";
-              return;
-            }
-            const { key } = await (await fetch("/api/config")).json();
-            sub = await reg.pushManager.subscribe({
-              userVisibleOnly: true,
-              applicationServerKey: b64(key),
-            });
-          }
-          if (sub) {
-            await fetch("/api/subscribe", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(sub),
-            });
-            nStatus.innerHTML =
-              "<b>Reminders are on.</b> You will get a notification every 30 seconds when a task starts, until you open this site.";
-            nBtn.hidden = true;
-          }
-        } catch (e) {
-          nStatus.innerHTML =
-            "<b>Could not turn on reminders.</b> " + e.message;
-        }
-      }
-      nBtn.onclick = () => setupNotify(true);
-      setupNotify(false);
-      ack();
-      document.addEventListener("visibilitychange", () => {
-        if (document.visibilityState === "visible") ack();
-      });
-    </script>
-  </body>
+/* ---- reminders ---- */
+const nStatus=document.getElementById("nstatus"),nBtn=document.getElementById("nbtn");
+const b64=s=>{const r=(s+"=".repeat((4-s.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/");return Uint8Array.from(atob(r),c=>c.charCodeAt(0))};
+async function ack(){try{await fetch("/api/ack",{method:"POST"})}catch(e){}}
+async function setupNotify(ask){
+  if(!("serviceWorker" in navigator)||!("PushManager" in window)){nStatus.innerHTML="<b>Reminders need a supported browser.</b> On iPhone: tap Share, choose Add to Home Screen, then open the app from your home screen.";nBtn.hidden=true;return}
+  try{
+    const reg=await navigator.serviceWorker.register("/sw.js");
+    let sub=await reg.pushManager.getSubscription();
+    if(Notification.permission==="denied"){nStatus.innerHTML="<b>Notifications are blocked.</b> Allow them in your browser's site settings, then reload.";return}
+    if(!sub&&ask){
+      if(await Notification.requestPermission()!=="granted"){nStatus.innerHTML="<b>Permission not given.</b> Tap the button to try again.";return}
+      const {key}=await (await fetch("/api/config")).json();if(!key)throw new Error("The VAPID_PUBLIC_KEY setting is missing on the server.");
+      sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:b64(key)});
+    }
+    if(sub){
+      await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(sub)});
+      nStatus.innerHTML="<b>Reminders are on.</b> You will get a notification every 30 seconds when a task starts, until you open this site.";nBtn.hidden=true;
+    }
+  }catch(e){
+    const push=/push service/i.test(e.message);
+    const brave=push&&navigator.brave?" Brave detected: open brave://settings/privacy, turn on Use Google services for push messaging, then restart Brave.":"";
+    nStatus.innerHTML="<b>Could not turn on reminders.</b> "+e.message+(push?" Your browser could not reach its push service. Try Chrome or Edge in a normal (not private) window, and turn off any VPN or ad-blocker for this site."+brave:"")}
+}
+nBtn.onclick=()=>setupNotify(true);
+setupNotify(false);ack();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")ack()});
+</script>
+</body>
 </html>

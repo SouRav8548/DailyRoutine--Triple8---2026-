@@ -25,8 +25,8 @@ module.exports = async (req, res) => {
 
   webpush.setVapidDetails(
     process.env.VAPID_SUBJECT || 'mailto:example@example.com',
-    process.env.VAPID_PUBLIC_KEY,
-    process.env.VAPID_PRIVATE_KEY
+    (process.env.VAPID_PUBLIC_KEY || '').trim(),
+    (process.env.VAPID_PRIVATE_KEY || '').trim()
   );
 
   if (req.query.test) {
